@@ -9,43 +9,43 @@ const LoadingCover = ({ onFinishLoading }) => {
 
     // 打字机动画效果，每隔一段时间显示下一个字符
     useEffect(() => {
-        let current = 0; // 当前显示到第几个字符
-        setTypedText(''); // 初始化已显示文本为空
-        const timer = setInterval(() => { // 定时器，每隔180ms执行一次
-            setTypedText(welcomeText.slice(0, current + 1)); // 截取 welcomeText 的前 current+1 个字符
-            current++; // 递增字符索引
-            if (current === welcomeText.length) { // 如果全部字符已显示
-                clearInterval(timer); // 停止定时器
+        let current = 0;
+        setTypedText('');
+        const timer = setInterval(() => {
+            setTypedText(welcomeText.slice(0, current + 1));
+            current++;
+            if (current === welcomeText.length) {
+                clearInterval(timer);
             }
-        }, 120); // 打字速度调慢（180ms/字符）
-        return () => clearInterval(timer); // 组件卸载时清理定时器
+        }, 120);
+        return () => clearInterval(timer);
     }, [welcomeText]);
 
     // 处理点击事件，触发扩散动画和淡出
     useEffect(() => {
-        const pageContainer = document.getElementById('pageContainer'); // 获取页面容器元素
-        const handleClick = (e) => { // 点击事件处理函数
-            const ripple = document.createElement('div'); // 创建扩散光圈元素
-            ripple.classList.add('ripple'); // 添加样式类
-            ripple.style.left = `${e.clientX - 10}px`; // 设置光圈横坐标
-            ripple.style.top = `${e.clientY - 10}px`; // 设置光圈纵坐标
-            document.body.appendChild(ripple); // 添加到页面
-            pageContainer?.classList?.add('page-clicked'); // 添加淡出动画类
-            setTimeout(() => { // 延迟1.2秒后
-                setIsVisible(false); // 隐藏遮罩
-                setTimeout(() => { // 再延迟0.6秒
+        const pageContainer = document.getElementById('pageContainer');
+        const handleClick = (e) => {
+            const ripple = document.createElement('div');
+            ripple.classList.add('ripple');
+            ripple.style.left = `${e.clientX - 10}px`;
+            ripple.style.top = `${e.clientY - 10}px`;
+            document.body.appendChild(ripple);
+            pageContainer?.classList?.add('page-clicked');
+            setTimeout(() => {
+                setIsVisible(false);
+                setTimeout(() => {
                     if (onFinishLoading) {
-                        onFinishLoading(); // 调用加载完成回调
+                        onFinishLoading();
                     }
                 }, 600);
             }, 1200);
-            setTimeout(() => { // 1秒后移除光圈元素
+            setTimeout(() => {
                 ripple.remove();
             }, 1000);
         };
-        document.body.addEventListener('click', handleClick); // 绑定点击事件
+        document.body.addEventListener('click', handleClick);
         return () => {
-            document.body.removeEventListener('click', handleClick); // 组件卸载时移除事件
+            document.body.removeEventListener('click', handleClick);
         };
     }, [onFinishLoading]);
 
@@ -55,12 +55,14 @@ const LoadingCover = ({ onFinishLoading }) => {
         <div className="welcome" id="pageContainer"> {/* 遮罩主容器 */}
             {/* 全屏背景视频 */}
             <video
-                className="welcome-bg-video" // 视频样式类
-                src="/videos/2_15488489003905.mp4" // 视频路径
-                autoPlay // 自动播放
-                loop // 循环播放
-                muted // 静音
-                playsInline // 移动端内联播放
+                className="welcome-bg-video"
+                src="/videos/2_15488489003905.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto" // 优化移动端加载
+                poster="/videos/2_15488489003905.jpg" // 可选：视频封面，提升体验
             />
             <div className="welcome-text px-2" id="welcomeText"> {/* 欢迎文字容器 */}
                 {typedText} {/* 打字机动画文字 */}

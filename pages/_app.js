@@ -19,6 +19,7 @@ import ExternalPlugins from '@/components/ExternalPlugins'
 import SEO from '@/components/SEO'
 import { zhCN } from '@clerk/localizations'
 import dynamic from 'next/dynamic'
+import LoadingCoverProvider from '@/themes/qwer/components/LoadingCoverProvider'
 // import { ClerkProvider } from '@clerk/nextjs'
 const ClerkProvider = dynamic(() =>
   import('@clerk/nextjs').then(m => m.ClerkProvider)
@@ -54,11 +55,13 @@ const MyApp = ({ Component, pageProps }) => {
   const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
   const content = (
     <GlobalContextProvider {...pageProps}>
-      <GLayout {...pageProps}>
-        <SEO {...pageProps} />
-        <Component {...pageProps} />
-      </GLayout>
-      <ExternalPlugins {...pageProps} />
+      <LoadingCoverProvider>
+        <GLayout {...pageProps}>
+          <SEO {...pageProps} />
+          <Component {...pageProps} />
+        </GLayout>
+        <ExternalPlugins {...pageProps} />
+      </LoadingCoverProvider>
     </GlobalContextProvider>
   )
   return (
