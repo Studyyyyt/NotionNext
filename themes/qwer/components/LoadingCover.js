@@ -49,6 +49,17 @@ const LoadingCover = ({ onFinishLoading }) => {
         };
     }, [onFinishLoading]);
 
+    // LoadingCover 消失时恢复 body 样式，允许页面滚动
+    useEffect(() => {
+        if (!isVisible) {
+            document.body.style.overflow = '';
+            document.body.style.height = '';
+        } else {
+            document.body.style.overflow = 'hidden';
+            document.body.style.height = '100vh';
+        }
+    }, [isVisible]);
+
     if (!isVisible) return null; // 不可见时不渲染任何内容
 
     return (

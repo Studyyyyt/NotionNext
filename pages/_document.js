@@ -65,7 +65,22 @@ class MyDocument extends Document {
           <script dangerouslySetInnerHTML={{ __html: darkModeScript }} />
         </Head>
 
-        <body>
+        <body style={{overflow:'hidden',height:'100vh'}}>
+          {/* 
+            欢迎页背景更换说明：
+            1. 本地图片：
+               - 将图片放入 public 目录（如 public/bg.jpg）。
+               - 修改 LoadingCover.js 中 <video> 标签为 <img src="/bg.jpg" ... />，并调整样式 className="welcome-bg-image"。
+            2. 本地视频：
+               - 将视频放入 public/videos 目录（如 public/videos/bg.mp4）。
+               - 修改 LoadingCover.js 中 <video src="/videos/bg.mp4" ... />。
+            3. 动态壁纸（如 Lottie、Canvas、WebGL）：
+               - 可在 LoadingCover.js 的 <div className="welcome"> 内插入对应组件或 Canvas。
+               - 并设置样式 className="welcome-bg-canvas"，确保 position: absolute; z-index: 1; 覆盖全屏。
+            4. 所有背景都应设置 position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; object-fit: cover;，以保证全屏自适应。
+            5. 文字内容请保持 z-index: 2;，确保显示在背景之上。
+            6. 修改完毕后建议清理浏览器缓存并刷新页面。
+          */}
           <Main />
           <NextScript />
         </body>
