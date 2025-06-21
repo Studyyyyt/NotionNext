@@ -64,12 +64,16 @@ const LoadingCover = ({ onFinishLoading }) => {
 
     return (
         <div className="welcome" id="pageContainer"> {/* 遮罩主容器 */}
-            {/* 全屏背景图片 */}
-            <img
-                className="welcome-bg-image"
-                src="/images/ark-image-generate.jpeg"
-                alt="welcome background"
-                style={{position: 'absolute', top: 0, left: 0, width: '100vw', height: '100vh', objectFit: 'cover', zIndex: 1, filter: 'brightness(1.15)'}}
+            {/* 全屏背景视频 */}
+            <video
+                className="welcome-bg-video"
+                src="/videos/2_15488489003905.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto" // 优化移动端加载
+                poster="/videos/2_15488489003905.jpg" // 可选：视频封面，提升体验
             />
             <div className="welcome-text px-2" id="welcomeText"> {/* 欢迎文字容器 */}
                 {typedText} {/* 打字机动画文字 */}
@@ -94,33 +98,15 @@ const LoadingCover = ({ onFinishLoading }) => {
                     opacity: 0; // 淡出
                     pointer-events: none; // 禁止交互
                 }
-                .welcome-bg-image {
-                    position: absolute;
+                .welcome-bg-video {
+                    position: absolute; // 绝对定位
                     top: 0;
                     left: 0;
-                    width: 100vw;
-                    height: 100vh;
-                    object-fit: cover;
-                    z-index: 1;
-                    filter: brightness(1.15);
-                }
-                @media (max-width: 900px) {
-                    .welcome-bg-image {
-                        height: 100dvh;
-                        width: 100vw;
-                        min-height: 100dvh;
-                        min-width: 100vw;
-                    }
-                }
-                @supports (height: 100dvh) {
-                    .welcome-bg-image {
-                        height: 100dvh;
-                        min-height: 100dvh;
-                    }
-                    .welcome {
-                        height: 100dvh;
-                        min-height: 100dvh;
-                    }
+                    width: 100vw; // 全屏宽
+                    height: 100vh; // 全屏高
+                    object-fit: cover; // 保持比例填充
+                    z-index: 1; // 在文字下方
+                    filter: brightness(1.15); // 提高亮度
                 }
                 .welcome-text {
                     font-size: 2.5rem; // 字体大小
@@ -129,7 +115,7 @@ const LoadingCover = ({ onFinishLoading }) => {
                     text-shadow: 0 0 20px rgba(0,0,0,0.5); // 黑色阴影
                     user-select: none; // 禁止选中
                     text-align: center; // 居中
-                    z-index: 2; // 在图片上方
+                    z-index: 2; // 在视频上方
                     position: relative;
                     letter-spacing: 4px; /* 字符间距更宽 */
                     background: none;
